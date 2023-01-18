@@ -24,8 +24,8 @@
     <link href="~/Template/css/light-bootstrap-dashboard.css" rel="stylesheet" />
 
     <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="~/Template/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
     <!--Datepicker-->
@@ -42,18 +42,18 @@
         <div class="main-panel">
             @Html.Partial("_NavBar")
             <div class="content">
-            <div ng-app="mapsApp" class="container-fluid">
-                @RenderBody()
-                <hr />
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <nav class="pull-left">
-                            <p class="copyright pull-left">&copy; @DateTime.Now.Year - Mostar's Mosques</p>
-                        </nav>
-                    </div>
-                </footer>
-            </div>
+                <div ng-app="mapsApp" class="container-fluid">
+                    @RenderBody()
+                    <hr />
+                    <footer class="footer">
+                        <div class="container-fluid">
+                            <nav class="pull-left">
+                                <p class="copyright pull-left">&copy; @DateTime.Now.Year - Mostar's Mosques</p>
+                            </nav>
+                        </div>
+                    </footer>
                 </div>
+            </div>
         </div>
     </div>
 
@@ -69,7 +69,7 @@
 
     <!--Google maps skripte-->
     <script src="~/scripts/angular.js"></script>
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA9qT3eLGxcFk6o1cJwGPuwzCXWJ9iUawQ"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9qT3eLGxcFk6o1cJwGPuwzCXWJ9iUawQ"></script>
     <script src="~/scripts/map.js"></script>
 
 
@@ -83,8 +83,9 @@
 
     <!--Datepicker-->
 
-    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <!--<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>-->
 
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
     <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
 
@@ -96,17 +97,17 @@
     <script src="~/Template/js/light-bootstrap-dashboard.js"></script>
 
     <script type="text/javascript">
-    	/*$(document).ready(function(){
+        /*$(document).ready(function(){
 
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "Posljednja prijava: " + $('#last_login').val()
+            $.notify({
+                icon: 'pe-7s-gift',
+                message: "Posljednja prijava: " + $('#last_login').val()
 
             },{
                 type: 'info',
                 timer: 4000
             });
-    	});*/
+        });*/
     </script>
 
 </body>
