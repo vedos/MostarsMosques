@@ -1,0 +1,106 @@
+﻿@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.VijestEditVM
+@using System.Web.Mvc.Ajax
+@using DiplomskiRadMostarsMosques_Web.Helper
+@using DiplomskiRadMostarsMosques_Data.Models
+@{
+    Jezik jezik = Global.GetJezik(Context);
+    ViewBag.Title = "";
+    Layout = null;
+
+}
+<div class="container-fluid card">
+    <br/>
+    <h4 class="title">Vijest</h4>
+    <br />
+    @using (Ajax.BeginForm("Snimi", null, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { enctype = "multipart/form-data", @id = "formId" }))
+    {
+        @Html.HiddenFor(model => model.Id)
+        <label>Naslov vijesti</label><br />
+        @Html.ValidationMessageFor(model => model.Naslov, "", new { @style = "color:red;" })
+        @Html.TextBoxFor(model => model.Naslov, new { @class = "form-control", @placeholder = "Naslov vijesti",@style = "max-width:780px;" })
+        <label>Opis vijesti</label><br />
+        @Html.ValidationMessageFor(model => model.Tekst, "", new { @style = "color:red;" })
+        @Html.TextAreaFor(model => model.Tekst, new { @class = "form-control", @placeholder = "Opis vijesti", @rows = "10",@style="max-width:780px;" })
+        <br />
+        <div style="margin:3px;" class="col-lg-11">
+            @if (Model.slikeIds != null)
+                {
+                    foreach (int x in Model.slikeIds)
+                    {
+                    <div class="image_div">
+                        @Ajax.ActionLink("Izbriši", "ObrisiSliku", new { slikaId = x, vijestId = Model.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "my-x-btn", @title = "Izbriši" })
+                        <a href="#" title="">
+                            <img style="margin-top:20px;" width="150" height="150" src="@Url.Action("Show", "Vijesti", new { id = x })" />
+                        </a>
+                    </div>
+
+                }
+            }
+        </div><br />
+        <label class="pull-left">Jezik</label><br />
+        @Html.ValidationMessageFor(model => model.JezikId, "", new { @style = "color:red;" })
+        @Html.DropDownListFor(model => model.JezikId, Model.JezikStavke, new { @class = "form-control", @style = "max-width:780px;" })
+
+        <br />
+        <label>Učitajte slike</label>
+        <input type="file" multiple="multiple" accept=".jpg, .png" name="input_slika" id="input_slika" class="" />
+
+
+        <br />
+        <input type="submit" value="Spremi" id="input_form" class="btn btn-info pull-right" />
+
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#input_slika").change(function () {
+            var formData = new FormData();
+            var totalFiles = document.getElementById("input_slika").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("input_slika").files[i];
+
+                formData.append("input_slika", file);
+            }
+            $.ajax({
+                type: "POST",
+                url: '/Vijesti/Upload',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                },
+                error: function (error) {
+                }
+            });
+        });
+    });
+
+
+
+
+    $(document).ready(function () {
+        var form = $('form#formId');
+        $("#input_form").click(function () {
+            $.ajax({
+                type: "GET",
+                url: '/Vijesti/CheckValid',
+                data: form.serialize(),
+                success: function (response) {
+                    if (response == "True") {
+                        setTimeout(location.reload.bind(location), 600);
+
+                    } else {
+
+                    }
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+        });
+    });
+
+
+</script>

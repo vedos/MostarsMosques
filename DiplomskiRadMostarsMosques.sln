@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiplomskiRadMostarsMosques_API", "DiplomskiRadMostarsMosques_API\DiplomskiRadMostarsMosques_API.csproj", "{B7C52AC1-9EB1-44CB-97A4-873D72A97E79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiplomskiRadMostarsMosques_Data", "DiplomskiRadMostarsMosques_Data\DiplomskiRadMostarsMosques_Data.csproj", "{C0FE3130-37DB-448A-85CE-B05F8B7DEA43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiplomskiRadMostarsMosques_Web", "DiplomskiRadMostarsMosques_Web\DiplomskiRadMostarsMosques_Web.csproj", "{295C0657-D7B2-4107-9E35-0B7D42F67003}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7C52AC1-9EB1-44CB-97A4-873D72A97E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7C52AC1-9EB1-44CB-97A4-873D72A97E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7C52AC1-9EB1-44CB-97A4-873D72A97E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7C52AC1-9EB1-44CB-97A4-873D72A97E79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0FE3130-37DB-448A-85CE-B05F8B7DEA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0FE3130-37DB-448A-85CE-B05F8B7DEA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0FE3130-37DB-448A-85CE-B05F8B7DEA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0FE3130-37DB-448A-85CE-B05F8B7DEA43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{295C0657-D7B2-4107-9E35-0B7D42F67003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{295C0657-D7B2-4107-9E35-0B7D42F67003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{295C0657-D7B2-4107-9E35-0B7D42F67003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{295C0657-D7B2-4107-9E35-0B7D42F67003}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

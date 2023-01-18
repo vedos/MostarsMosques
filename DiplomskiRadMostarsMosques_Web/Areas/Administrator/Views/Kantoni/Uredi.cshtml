@@ -1,0 +1,48 @@
+﻿@using System.Web.Mvc.Ajax
+@using DiplomskiRadMostarsMosques_Data.Models
+
+@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.KantonEditVM
+@{
+    ViewBag.Title = "Uredi";
+    Layout = null;
+}
+<div class="container-fluid card">
+    <br />
+    <h4 class="title">Kanton</h4>
+    <br>
+    @using (Ajax.BeginForm("Snimi",null, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @id="formId" }))
+    {
+        @Html.HiddenFor(model => model.Id)
+        <label>Naziv kantona</label><br />
+        @Html.ValidationMessageFor(x=>x.Naziv,"",new {@style="color:red;" })
+        @Html.TextBoxFor(model => model.Naziv, new { @class = "form-control", placeholder = "Naziv kantona" })
+        <label>Skraćenica</label><br />
+        @Html.TextBoxFor(model => model.Skracenica, new { @class = "form-control", placeholder = "Skraćenica" })
+        <br />
+        <input type="submit" value="Spremi"  id="input_form"  class="btn btn-info pull-right" />
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        var form = $('form#formId');
+        $("#input_form").click(function () {
+            $.ajax({
+                type: "GET",
+                url: '/Kantoni/CheckValid',
+                data: form.serialize(),
+                success: function (response) {
+                    if (response == "True") {
+                        setTimeout(location.reload.bind(location), 600);
+
+                    } else {
+
+                    }
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+        });
+    });
+</script>

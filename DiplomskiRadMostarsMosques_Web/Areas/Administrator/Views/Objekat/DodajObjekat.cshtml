@@ -1,0 +1,155 @@
+﻿@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.ObjekatEditVM
+@using DiplomskiRadMostarsMosques_Web.Helper
+@using DiplomskiRadMostarsMosques_Data.Models
+@{
+    if (Model.Id == 0)
+    {
+        ViewBag.Title = "Dodavanje objekta";
+
+    }
+    else {
+        ViewBag.Title = "Uređivanje objekta";
+    }
+}
+
+<div class="container-fluid" id="div_objekat" >
+    <div ng-controller="MapCtrl" >
+        <div id="map"></div>
+        <br />
+      @using (Html.BeginForm("Snimi", "Objekat", FormMethod.Post, new { enctype = "multipart/form-data" }))
+      {
+
+        <div class="form-group col-lg-11">
+            <div class="col-lg-4" ng-init="initCoordinates(@Model.latitude,@Model.longitude)">
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.LokacijaId)
+                <label>Geografske koordinate</label><br />
+                @Html.ValidationMessageFor(model=>model.latitude,"",new {@style="color:red;" })
+                <input type="text" class="form-control" ng-change="setCoordinates()" ng-model="lat" value="@Model.latitude" id="inputLat" name="latitude" placeholder="latitude" />
+                @Html.ValidationMessageFor(model => model.longitude, "", new { @style = "color:red;" })
+                <input type="text" class="form-control" ng-change="setCoordinates()" ng-model="lng" value="@Model.longitude" id="inputLng" name="longitude" placeholder="longitude" />
+                <br />
+
+                <label>Odaberite aktivnost objekta</label>
+                <br />
+                @Html.ValidationMessageFor(model => model.AktivnostId, "", new { @style = "color:red;" })
+                @Html.DropDownListFor(model => model.AktivnostId, Model.aktivnostStavke, new { @class = "form-control" })
+                <br />
+                <label>Godina izgradnja</label>
+                @Html.ValidationMessageFor(model => model.GodinaIzgradnje, "", new { @style = "color:red;" })
+                @Html.TextBoxFor(model => model.GodinaIzgradnje, new { @class = "form-control", @placeholder = "Godina izgradnje" })
+                <br />
+            </div>
+
+
+
+            <div class="col-lg-4">
+                <label>Informacije o odabranom mjestu</label>
+                <br />
+                @Html.ValidationMessageFor(model => model.Opis, "", new { @style = "color:red;" })
+                @Html.TextAreaFor(model => model.Opis, new { @class = "form-control", @placeholder = "Opis" })
+                <br />
+                @Html.ValidationMessageFor(model => model.Naziv, "", new { @style = "color:red;" })
+                @Html.TextBoxFor(model => model.Naziv, new { @class = "form-control", @placeholder = "Naziv" })
+                <br />
+                @Html.ValidationMessageFor(model => model.TipObjektaId, "", new { @style = "color:red;" })
+                @Html.DropDownListFor(model => model.TipObjektaId, Model.TipoviObjekataStavke, new { @class = "form-control" })
+                <br />
+                @Html.ValidationMessageFor(model => model.MedzlisId, "", new { @style = "color:red;" })
+                @Html.DropDownListFor(model => model.MedzlisId, Model.MedzlisStavke, new { @class = "form-control" })
+                <br />
+
+            </div>
+
+            <div class="col-lg-4">
+<br />
+                <div style="width:250px">
+                    <label for="IsUnescoCheckbox">Nacionalni spomenik BIH:  </label>
+                    @Html.CheckBoxFor(model => model.IsUnesco, new { @class = "pull-right", @id = "IsUnescoCheckbox" })
+                </div>
+                <div style="width:250px">
+                    <label for="IsRusenaCheckbox">Rušena:  </label>
+                    @Html.CheckBoxFor(model => model.IsRusena, new { @class = "pull-right", @id = "IsRusenaCheckbox", onclick = "checkRusena()" })
+                </div>
+                <br />
+
+                @Html.TextBoxFor(model => model.GodinaRusenja, new { @class = "form-control", @placeholder = "Godina rusenja", @id = "input_godRusenja"})
+                <br />
+                @Html.TextBoxFor(model => model.GodinaObnove, new { @class = "form-control", @placeholder = "Godina obnove", @id = "input_godObnove" })
+                <br />
+                @Html.ValidationMessageFor(model => model.DzematId, "", new { @style = "color:red;" })
+                @Html.DropDownListFor(model => model.DzematId, Model.DzematiStavke, new { @class = "form-control" })
+                <br />
+            </div>
+
+            <br />
+
+
+            <div style="margin:3px;" class="col-lg-10">
+                <br />
+
+                <label>Učitajte slike</label><br />
+                    <input type="file" multiple="multiple" accept=".jpg, .png" name="input_slika" id="input_slika" class="" />
+                <label style="color:red;">@Model.UcitajSlikeError</label>
+                    <br />
+
+</div>
+            
+           
+            <div style="margin:3px;margin-bottom:10px" class="col-lg-10">
+
+                @Html.ValidationMessageFor(model => model.JezikId, "", new { @style = "color:red;" })
+                @Html.DropDownListFor(model => model.JezikId, Model.JezikStavke, new { @class = "form-control" })
+                <br />
+                <input type="submit" class="btn btn-info" value="Spremi" />
+                </div>
+            </div>
+
+            <div style="margin:3px;" class="col-lg-11">
+                @if (Model.slikeIds != null)
+                {
+                    foreach (int x in Model.slikeIds)
+                    {
+                        <div class="image_div">
+                            @Html.ActionLink("Obriši", "ObrisiSliku", "Objekat", new { slikaId = x, objekatId = Model.Id }, new { @class = "my-x-btn",title="Izbriši" })
+                            <a>
+                                <img width="150" height="150" style="margin-top:20px" src="@Url.Action("Show", "Objekat", new { id = x })" />
+                            </a>
+                        </div>
+
+                    }
+                }
+            </div>
+
+      }
+    
+</div>
+    </div>
+
+<div id="result" style="display:none;"></div>
+
+<script>
+    var opt = {
+        autoOpen: false,
+        title: 'Mostars Mosques',
+        width: 350,
+        height: 'auto',
+        modal: true
+    };
+
+    function openPopup() {
+        $("#result").dialog(opt).dialog("open");
+    }
+
+
+    function checkRusena() {
+        var check = document.getElementById("IsRusenaCheckbox");
+        document.getElementById('input_godRusenja').disabled = !check.checked;
+        document.getElementById('input_godObnove').disabled = !check.checked;
+
+    }
+
+    window.onload = function () {
+        checkRusena();
+    }
+</script>

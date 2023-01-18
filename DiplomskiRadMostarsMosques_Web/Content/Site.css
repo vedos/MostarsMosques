@@ -1,0 +1,204 @@
+﻿body {
+    padding-top: 0px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.backround-mostar {
+    background-image: url('../Template/images/wallup-247943.jpg');
+    background-repeat: repeat-y; /* for vertical repeat */
+    background-repeat: repeat-x; /* for horizontal repeat */
+}
+
+/*javascript map za dodavanje*/
+
+#map {
+    height:500px;
+    width:100%;
+}
+.infoWindowContent {
+    font-size:  14px !important;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+h2 {
+    margin-bottom:0;
+    margin-top: 0;
+}
+
+
+/*angular map za prikazivanje svih objekata*/
+.angular-google-map-container {
+            height: 500px;
+        }
+
+        .angular-google-map {
+            width: 100%;
+            height: 100%;
+            margin: auto 0px;
+        }
+
+        .locations {
+            width: 200px;
+            float: left;
+        }
+
+            .locations ul {
+                padding: 0px;
+                margin: 0px;
+                margin-right: 20px;
+            }
+
+                .locations ul li {
+                    list-style-type: none;
+                    padding: 5px;
+                    border-bottom: 1px solid #f3f3f3;
+                    cursor: pointer;
+                }
+
+
+
+.table_cursor {
+    cursor: pointer;
+}
+
+    .image_div {
+        width: 170px;
+        height: 180px;
+        float:left;
+        text-align: center;
+        
+    }
+        .image_div:hover {
+        opacity:0.5;
+        
+        }
+
+.blue_nav {
+background:#2e85be;
+text-decoration-color:#fff;
+text-emphasis-color:#fff;
+z-index:1;
+}
+
+.my-x-btn {
+    background: url('../Template/images/x-mark-4-xxl.png') no-repeat center;
+display: block;
+    width: 20px; 
+    height: 20px;
+     text-indent: -9999px;
+     float:right;
+     opacity:0.9;
+}
+
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.my-edit-btn {
+    background-image: url('../Template/images/edit_icon_20p.png');
+    display: block;
+    width: 20px;
+    height: 20px;
+    text-indent: -9999px;
+}
+.my-delete-btn {
+    background-image: url('../Template/images/delete-512.png');
+    display: block;
+    width: 20px;
+    height: 20px;
+    text-indent: -9999px;
+}
+
+
+/* layout.css Style */
+.upload-drop-zone {
+  height: 200px;
+  border-width: 2px;
+  margin-bottom: 20px;
+}
+
+/* skin.css Style*/
+.upload-drop-zone {
+  color: #ccc;
+  border-style: dashed;
+  border-color: #ccc;
+  line-height: 200px;
+  text-align: center
+}
+.upload-drop-zone.drop {
+  color: #222;
+  border-color: #222;
+}
+
+
+
+.image-preview-input {
+    position: relative;
+    overflow: hidden;
+	margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.image-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}
+
+
+.no-hover{
+    pointer-events: none;
+}
+.no-hover:hover{
+    border: 1px solid red; 
+}
+
+.sidebar .nav > li.active-pro{
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+}
+.sidebar .nav > li.active-pro a{
+    background: rgba(255, 255, 255, 0.14);
+    opacity: 1;
+    color: #FFFFFF;
+}

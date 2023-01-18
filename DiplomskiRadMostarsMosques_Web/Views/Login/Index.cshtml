@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Prijava";
+}
+
+
+<div class="container" style="height:auto; width:400px;margin-top:100px;margin-bottom:220px;">
+    <h3>Prijava na Mostar's Mosques</h3>
+        <form class="form-group" action="~/Login/Provjera">
+                <input type="text" name="inputUsername" placeholder="korisničko ime" class="form-control" required="" autofocus="" />
+                <input type="password" name="inputPassword" placeholder="lozinka" class="form-control" required="" />
+            <br/>
+            <div class="pull-left">
+                <label class="checkbox">
+                    Zapamti me
+                    <span class="icons"><span class="first-icon fa fa-square-o"></span><span class="second-icon fa fa-check-square-o"></span></span><input type="checkbox" id="remember_me" name="remember_me" value="" data-toggle="checkbox">
+                </label>
+                </div>
+                <button class="btn btn-primary pull-right" type="submit">Prijava</button>
+</form>
+</div>
+

@@ -1,0 +1,23 @@
+﻿@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.ProfilEditVM
+@{
+    ViewBag.Title = "PromijenaLozinke";
+    Layout = null;
+}
+<div class="container-fluid card">
+    <br />
+    <h4 class="title">Izmijena lozinke</h4>
+    <br />
+    <div class="form-group">
+
+        @using (Ajax.BeginForm("PotvrdaUnosa", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }))
+        {
+            @Html.HiddenFor(model => model.Id)
+            @Html.ValidationMessageFor(model => model.PasswordNovi, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.PasswordNovi, new { @class = "form-control",@type="password", @placeholder = "Unesite novu lozinku", @required = "" })
+            @Html.ValidationMessageFor(model => model.PasswordNovi2, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.PasswordNovi2, new { @class = "form-control", @type = "password", @placeholder = "Potvrdite novu lozinku", @required = "" })
+            <br />
+            <input type="submit" value="Spremi"  id="input_forma" onclick="reload()" class="btn btn-info pull-right" />
+        }
+    </div>
+</div>

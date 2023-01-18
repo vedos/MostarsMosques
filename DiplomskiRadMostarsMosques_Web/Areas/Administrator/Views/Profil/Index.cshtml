@@ -1,0 +1,49 @@
+﻿@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.ProfilEditVM
+@{
+    ViewBag.Title = "Profil";
+    Layout = null;
+}
+<div class="container-fluid card">
+    @Ajax.ActionLink("Promijeni lozinku", "PromijenaLozinke", new { id = Model.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "pull-right" })
+    <br />
+    <h4 class="title">Profil</h4>
+    <br />
+    <div class="form-group">
+        <br />
+        @using (Ajax.BeginForm("PotvrdaUnosa", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }))
+        {
+            @Html.HiddenFor(model => model.Id)
+            <label>Ime</label><br />
+            @Html.ValidationMessageFor(model => model.Ime, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.Ime, new { @class = "form-control", @placeholder = "Ime" })
+            <label>Prezime</label><br />
+            @Html.ValidationMessageFor(model => model.Prezime, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.Prezime, new { @class = "form-control", @placeholder = "Prezime" })
+            <label>Email</label><br />
+            @Html.ValidationMessageFor(model => model.Email, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email" })
+            <label>Korisničko ime</label><br />
+            @Html.ValidationMessageFor(model => model.Username, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @placeholder = "Korisničko ime" })<br />
+            <br />
+            <input type="submit" value="Spremi" id="input_form" onclick="reload()" class="btn btn-info pull-right" />
+        }
+    </div>
+    <div id="result" style="display:none;"></div>
+</div>
+
+<script>
+    var opt = {
+        autoOpen: false,
+        title: 'Mostars Mosques',
+        width: 350,
+        height: 'auto',
+        modal: true
+    };
+
+    function openPopup() {
+        $("#result").dialog(opt).dialog("open");
+    }
+
+</script>
+

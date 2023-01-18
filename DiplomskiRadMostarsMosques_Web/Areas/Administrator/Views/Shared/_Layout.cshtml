@@ -1,0 +1,114 @@
+﻿@using Jmelosegui.Mvc.GoogleMap
+@using DiplomskiRadMostarsMosques_Data.Models
+@using DiplomskiRadMostarsMosques_Web.Helper
+@{ 
+    Korisnik korisnik = Autentifikacija.GetLogiraniKorisnik(Context);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>@ViewBag.Title</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap core CSS     -->
+    <link href="~/Template/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="~/Template/css/animate.min.css" rel="stylesheet" />
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="~/Template/css/light-bootstrap-dashboard.css" rel="stylesheet" />
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="~/Template/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+    <!--Datepicker-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+    <link href="https://rawgithub.com/hayageek/jquery-upload-file/master/css/uploadfile.css" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <input type="hidden" id="last_login" value="@korisnik.zadnjaPrijava" />
+        @Html.Partial("_SideBar")
+
+        <div class="main-panel">
+            @Html.Partial("_NavBar")
+            <div class="content">
+            <div ng-app="mapsApp" class="container-fluid">
+                @RenderBody()
+                <hr />
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <nav class="pull-left">
+                            <p class="copyright pull-left">&copy; @DateTime.Now.Year - Mostar's Mosques</p>
+                        </nav>
+                    </div>
+                </footer>
+            </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/Template/js/jquery-1.10.2.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Template/js/bootstrap.min.js"></script>
+    <script src="~/scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <!--Checkbox Radio Lite-->
+    <script src="~/Template/js/bootstrap-checkbox-radio-switch.js"></script>
+
+    <!--Google maps skripte-->
+    <script src="~/scripts/angular.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA9qT3eLGxcFk6o1cJwGPuwzCXWJ9iUawQ"></script>
+    <script src="~/scripts/map.js"></script>
+
+
+    <script src="~/Template/js/bootstrap-notify.js"></script>
+    <script src="~/Template/js/bootstrap-select.js"></script>
+
+
+    @* google map directive js *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+    <script src="https://rawgit.com/angular-ui/angular-google-maps/2.0.X/dist/angular-google-maps.js"></script>
+
+    <!--Datepicker-->
+
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+
+    <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
+
+    <!--Moja skripta-->
+    <script src="~/scripts/MostarsMosques.js"></script>
+    <script src="~/scripts/dirPagination.js"></script>
+
+    <!--Sidebar-->
+    <script src="~/Template/js/light-bootstrap-dashboard.js"></script>
+
+    <script type="text/javascript">
+    	/*$(document).ready(function(){
+
+        	$.notify({
+            	icon: 'pe-7s-gift',
+            	message: "Posljednja prijava: " + $('#last_login').val()
+
+            },{
+                type: 'info',
+                timer: 4000
+            });
+    	});*/
+    </script>
+
+</body>
+</html>
+

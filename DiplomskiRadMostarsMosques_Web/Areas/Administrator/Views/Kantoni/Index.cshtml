@@ -1,0 +1,66 @@
+﻿@model List<DiplomskiRadMostarsMosques_Data.Models.Kanton>
+@using DiplomskiRadMostarsMosques_Data.Models
+@using System.Web.Mvc.Ajax
+@{
+    ViewBag.Title = "Kantoni";
+}
+<div class="container-fluid">
+    <div class="col-lg-3 pull-left">
+        <h4 style="margin:0;">Kantoni</h4>
+    </div>
+    @Ajax.ActionLink("Dodaj kanton", "Dodaj", null, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "btn btn-primary pull-right" })<br />
+
+    <br />
+    <br />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Naziv
+                    </th>
+                    <th>
+                        Skrećenica
+                    </th>
+                    <th>
+                        Akcija
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Kanton x in Model)
+            {
+                    <tr>
+                        <td>
+                            @x.Naziv
+                        </td>
+                        <td>
+                            @x.Skracenica
+                        </td>
+                        <td width="100">
+                            @Ajax.ActionLink("Uredi", "Uredi", new { kantonId = x.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "my-edit-btn pull-left", @title = "Uredi" })
+                            <a href="~/Administrator/Kantoni/Obrisi?kantonId=@x.Id" onclick="return Submit(this.id)" title="Izbriši">
+                                <img src="~/Template/images/delete-512.png" width="20" height="20" style="margin-left:5px" />
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="result" style="display:none;"></div>
+
+
+    </div>
+    <script>
+        var opt = {
+            autoOpen: false,
+            title: 'Mostars Mosques',
+            width: 350,
+            height: 'auto',
+            modal: true
+        };
+
+
+        function openPopup() {
+            $("#result").dialog(opt).dialog("open");
+        }
+    </script>

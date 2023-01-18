@@ -1,0 +1,33 @@
+﻿@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.ProfilEditVM
+@{
+    ViewBag.Title = "PotvrdaUnosa";
+    Layout = null;
+}
+<div class="container-fluid card">
+    <br/>
+    <h4 class="title">Identifikacija</h4>
+    <br />
+    <div class="form-group">
+        @if (Model.PasswordNovi != null)
+        {
+            <label>Unesite staru lozinku</label>
+        }
+        else
+        {
+            <label>Unesite lozinku</label>
+        }
+
+        @using (Ajax.BeginForm("Snimi", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }))
+        {
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Ime)
+            @Html.HiddenFor(model => model.Prezime)
+            @Html.HiddenFor(model => model.Username)
+            @Html.HiddenFor(model => model.Email)
+            @Html.HiddenFor(model => model.PasswordNovi)
+            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Unesite lozinku",@type="password",@required="" })
+            <br />
+            <input type="submit" value="Potvrdi"  id="input_forma" onclick="reload()" class="btn btn-danger pull-right" />
+        }
+    </div>
+</div>

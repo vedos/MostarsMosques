@@ -1,0 +1,75 @@
+﻿@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.KorisniciEditVM
+@using System.Web.Mvc.Ajax
+@{
+    ViewBag.Title = "Dodaj";
+    Layout = null;
+}
+<div class="container-fluid card">
+    <br />
+    @if (Model.Id == 0)
+    {
+
+        <h4 class="title">Dodavanje novog korisnika</h4>
+    }
+    else
+    {
+
+        <h4 class="title">Uređivanje novog korisnika</h4>
+    }
+    <br />
+    <div class="form-group">
+        @using (Ajax.BeginForm("Snimi",null, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" },new { @id="formId" }))
+        {
+            @Html.HiddenFor(model => model.Id)
+            <label>Ime</label><br />
+            @Html.ValidationMessageFor(model => model.Ime, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.Ime, new { @class = "form-control", @placeholder = "Ime" })
+            <label>Prezime</label><br />
+            @Html.ValidationMessageFor(model => model.Prezime, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.Prezime, new { @class = "form-control", @placeholder = "Prezime" })
+            <label>Korisničko ime</label><br />
+            @Html.ValidationMessageFor(model => model.Username, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @placeholder = "Korisničko ime" })
+            <label>Lozinka</label><br />
+            @Html.ValidationMessageFor(model => model.Password, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @type = "password", @placeholder = "Lozinka" })
+            <label>Email</label><br />
+            @Html.ValidationMessageFor(model => model.Email, "", new { @style = "color:red;" });
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email" })<br />
+
+            <div style="padding-top:5px;padding-bottom:5px; text-align:left;">
+                <label style="" for="chkAdmin">Administrator: </label>
+                @Html.CheckBoxFor(model => model.isAdministrator, new { @class = "", id = "chkAdmin", type = "checkbox" })
+
+            </div>
+            <br />
+            <input type="submit" value="Spremi"  id="input_form" class="btn btn-info pull-right" />
+        }
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var form = $('form#formId');
+        $("#input_form").click(function () {
+            $.ajax({
+                type: "GET",
+                url: '/Korisnici/CheckValid',
+                data: form.serialize(),
+                success: function (response) {
+                    if (response == "True") {
+                        setTimeout(location.reload.bind(location), 600);
+
+                    } else {
+
+                    }
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+        });
+    });
+</script>

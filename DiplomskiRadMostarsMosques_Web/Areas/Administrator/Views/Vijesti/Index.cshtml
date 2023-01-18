@@ -1,0 +1,101 @@
+﻿@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.VijestVM
+@using DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models
+@using PagedList;
+@using PagedList.Mvc;
+@using System.Web.Mvc.Ajax
+@{
+    ViewBag.Title = "Vijesti";
+}
+<div class="container-fluid">
+    <div class="">
+        @using (Html.BeginForm("Pretraga", "Vijesti"))
+            {
+
+            <div class="col-lg-3 pull-left">
+                <h4 style="margin:0;">Vijesti</h4>
+            </div>
+            @Ajax.ActionLink("Dodaj vijesti", "Dodaj", new { JezikId = Model.JezikId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "btn btn-primary pull-right" })
+            <div style="margin-right:10px;" class="input-group col-lg-3 pull-right">
+                <input class="form-control pull-right" placeholder="Pretraži vijest" name="tekst" />
+                <span class="input-group-btn">
+                    <input value="Traži" type="submit" class="btn btn-info" />
+                </span>
+            </div>
+
+        }
+        <div class="col-lg-3 pull-right">
+            @using (Html.BeginForm("Index", "Vijesti"))
+            {
+                @Html.DropDownListFor(model => model.JezikId, Model.JezikStavke, new { @class = "form-control", @onchange = "this.form.submit()" })
+            }
+        </div>
+    </div>
+
+
+    <br />
+    <br />
+    <br />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Naziv
+                </th>
+                <th>
+                    Tekst
+                </th>
+                <th>
+                    Datum objave
+                </th>
+                <th>
+                    Akcija
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (VijestVM.VijestInfo x in Model.vijesti)
+            {
+                <tr>
+                    <td>
+                        @x.Naslov
+                    </td>
+                    <td>
+                        @x.Tekst
+                    </td>
+                    <td>
+                        @x.DatumPostavljanja.ToShortDateString()
+                    </td>
+                    <td width="100">
+                        @Ajax.ActionLink("Uredi", "Uredi", new { vijestId = x.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "my-edit-btn pull-left", @title = "Uredi" })
+                        <a href="~/Administrator/Vijesti/Obrisi?vijestId=@x.Id" onclick="return Submit(this.id)" title="Izbriši">
+                            <img src="~/Template/images/delete-512.png" width="20" height="20" style="margin-left:5px" />
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager(Model.vijesti, page => Url.Action("Index", new { page }))
+
+
+    <div id="result" style="display:none;"></div>
+</div>
+
+
+
+<script>
+    var opt = {
+        autoOpen: false,
+        title: 'Mostars Mosques',
+        width: 780,
+        height: 'auto',
+        modal: true
+    };
+    function openPopup() {
+        $("#result").dialog(opt).dialog("open");
+    }
+
+
+
+</script>
+

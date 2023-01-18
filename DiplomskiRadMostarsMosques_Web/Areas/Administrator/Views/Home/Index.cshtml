@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Dobrodošli na Mostars Mosques";
+}
+@using System.Linq
+@using DiplomskiRadMostarsMosques_Data.Models
+@using DiplomskiRadMostarsMosques_Web.Helper
+@{
+    Korisnik korisnik = Autentifikacija.GetLogiraniKorisnik(Context);
+
+}
+<div class="container-fluid">
+    <h4>Dobrodošli @korisnik.Ime @korisnik.Prezime </h4>
+
+    <div id="result" style="display:none;"></div>
+</div>
+
+
+<script>
+    var opt = {
+        autoOpen: false,
+        title: 'Mostars Mosques',
+        width: 350,
+        height: 'auto',
+        modal: true
+    };
+
+    function openPopup() {
+        $("#result").dialog(opt).dialog("open");
+    }
+
+</script>

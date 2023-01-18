@@ -1,0 +1,94 @@
+﻿@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.DzematVM
+@using DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Džemati";
+}
+<div class="container-fluid">
+
+    
+    @using (Html.BeginForm("Pretraga", "Dzemati"))
+    {
+        <div class="col-lg-3 pull-left">
+            <h4 style="margin:0;">Džemati</h4>
+        </div>
+        @Ajax.ActionLink("Dodaj džemat", "Dodaj", null, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "btn btn-primary pull-right" })
+        <div style="margin-right:10px;" class="input-group col-lg-3 pull-right">
+            <input class="form-control pull-right" placeholder="Pretraži džemate" name="tekst" />
+            <span class="input-group-btn">
+                <input value="Traži" type="submit" class="btn btn-info" />
+            </span>
+        </div><br />
+    }
+    <br /><br />
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Naziv
+                </th>
+                <th>
+                    Medžlis
+                </th>
+                <th>
+                    Opština
+                </th>
+                <th>
+                    Kanton
+                </th>
+                <th>
+                    Akcija
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DzematVM.DzematInfo x in Model.listDzemati)
+            {
+                <tr>
+                    <td>
+                        @x.Naziv
+                    </td>
+                    <td>
+                        @x.Medzlis
+                    </td>
+                    <td>
+                        @x.Opstina
+                    </td>
+                    <td>
+                        @x.Kanton
+                    </td>
+                    <td width="100">
+                        @Ajax.ActionLink("Uredi", "Uredi", new { dzematId = x.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "my-edit-btn pull-left", @title = "Uredi" })
+                        <a href="~/Administrator/Dzemati/Izbrisi?dzematId=@x.Id" onclick="return Submit(this.id)" title="Izbriši">
+                            <img src="~/Template/images/delete-512.png" width="20" height="20" style="margin-left:5px" />
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager(Model.listDzemati, page => Url.Action("Index", new { page }))
+
+
+    <div id="result" style="display:none;"></div>
+
+
+</div>
+
+    <script>
+        var opt = {
+            autoOpen: false,
+            title: 'Mostars Mosques',
+            width: 350,
+            height: 'auto',
+            modal: true
+        };
+
+
+        function openPopup() {
+            $("#result").dialog(opt).dialog("open");
+        }
+    </script>
+

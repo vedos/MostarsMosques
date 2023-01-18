@@ -1,0 +1,77 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<DiplomskiRadMostarsMosques_Data.Models.Opstina>
+@using DiplomskiRadMostarsMosques_Data.Models
+@using System.Web.Mvc.Ajax
+@{
+    ViewBag.Title = "Opštine";
+}
+<div class="container-fluid">
+
+    @using (Html.BeginForm("Pretraga", "Opstine"))
+    {
+        <div class="col-lg-3 pull-left">
+            <h4 style="margin:0;">Opštine</h4>
+        </div>
+        @Ajax.ActionLink("Dodaj opstinu", "Dodaj", null, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "btn btn-primary pull-right" })
+        <div style="margin-right:10px;" class="input-group col-lg-3 pull-right">
+            <input class="form-control pull-right" placeholder="Pretraži opštine" name="tekst" />
+            <span class="input-group-btn">
+                <input value="Traži" type="submit" class="btn btn-info" />
+            </span>
+        </div><br />
+    }
+    <br /><br />
+    <table  class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Naziv
+                </th>
+                <th>
+                    Kanton
+                </th>
+                <th>
+                    Akcija
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Opstina x in Model)
+            {
+                <tr>
+                    <td>
+                        @x.Naziv
+                    </td>
+                    <td>
+                        @x.Kanton.Naziv
+                    </td>
+                    <td width="100">
+                        @Ajax.ActionLink("Uredi", "Uredi", new { opstinaId = x.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "my-edit-btn pull-left", @title = "Uredi" })
+                        <a href="~/Administrator/Opstine/Obrisi?opstinaId=@x.Id" onclick="return Submit(this.id)" title="Izbriši">
+                            <img src="~/Template/images/delete-512.png" width="20" height="20" style="margin-left:5px" />
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+    <div id="result" style="display:none;"></div>
+
+
+</div>
+<script>
+    var opt = {
+        autoOpen: false,
+        title: 'Mostars Mosques',
+        width: 350,
+        height: 'auto',
+        modal: true
+    };
+
+    function openPopup() {
+        $("#result").dialog(opt).dialog("open");
+    }
+</script>

@@ -1,0 +1,83 @@
+﻿@using System.Linq
+@using System.Web.Mvc.Ajax
+@using DiplomskiRadMostarsMosques_Data.Models
+@using DiplomskiRadMostarsMosques_Web.Helper
+@{
+    Korisnik korisnik = Autentifikacija.GetLogiraniKorisnik(Context);
+}
+
+<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+
+<div class="sidebar" data-color="blue" data-image="/Template/images/sidebar-3.jpg">
+    <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a class="simple-text" href="~/Administrator/Home/"> Mostar's Mosques</a>
+        </div>
+
+        <ul class="nav">
+            @*<li class="@(ViewBag.Current == "Pocetna" ? "active" : "")">
+                <a style="color:white;" href="~/Administrator/Home/">
+                    <i class="pe-7s-graph"></i>
+                    Početna
+                </a>
+            </li>*@
+            <li class="@(ViewBag.Current == "Korisnici" ? "active" : "")">
+                <a style="color:white;" href="~/Administrator/Korisnici">
+                    <i class="pe-7s-user"></i>
+                    Korisnici
+                </a>
+            </li>
+            <li class="dropdown  @(ViewBag.Current == "Objekti" ? "active" : "")">
+                <a style="color:white;" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <i class="pe-7s-map-marker"></i>
+                    Objekti
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="~/Administrator/Objekat/Dodaj">Dodaj objekat</a>
+                    </li>
+                    <li>
+                        <a href="~/Administrator/Objekat">Pogledaj sve objekte</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown  @(ViewBag.Current == "L_Jedinice" ? "active" : "")">
+                <a style="color:white;" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                    <i class="pe-7s-world"></i>
+                    Lokacijske jedinice
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="~/Administrator/Kantoni"> Kantoni </a>
+                    </li>
+                    <li>
+                        <a href="~/Administrator/Opstine"> Opštine </a>
+                    </li>
+                    <li>
+                        <a href="~/Administrator/Medzlisi"> Medžlisi </a>
+                    </li>
+                    <li>
+                        <a href="~/Administrator/Dzemati"> Džemati </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="@(ViewBag.Current == "Vijesti" ? "active" : "")">
+                <a style="color:white;" href="~/Administrator/Vijesti">
+                    <i class="pe-7s-news-paper"></i>
+                    Vijesti
+                </a>
+            </li>
+            <li class="dropdown  @(ViewBag.Current == "Dogadjaji" ? "active" : "")">
+                <a style="color:white;" href="~/Administrator/Dogadjaji">
+                    <i class="pe-7s-note2"></i>
+                    Događaji
+                </a>
+            </li>
+            </ul>
+        </div>
+                <div class="sidebar-background" style="background-image: url(/Template/images/sidebar-3.jpg); display:block;"></div>
+</div>
+

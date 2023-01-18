@@ -1,0 +1,111 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.DogadjajVM
+@using DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models
+@using System.Web.Mvc.Ajax
+@using DiplomskiRadMostarsMosques_Data.Models
+@using DiplomskiRadMostarsMosques_Web.Helper
+@{
+    Jezik jezik = Global.GetJezik(Context);
+    List<Jezik> listJezici = Global.GetJezici();
+
+    ViewBag.Title = "Događaji";
+}
+<div class="container-fluid">
+    <div class="">
+
+        @using (Html.BeginForm("Pretraga", "Dogadjaji"))
+        {
+            <div class="col-lg-3 pull-left">
+                <h4 style="margin:0;">Događaji</h4>
+            </div>
+            @Html.DropDownListFor(model => model.JezikId, Model.JezikStavke, new { @class = "form-control hidden", @onchange = "this.form.submit()" })
+            @Ajax.ActionLink("Dodaj događaj", "Dodaj",new {JezikId = Model.JezikId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "btn btn-primary pull-right" })
+            <input type="hidden" value="@Model.JezikId" name="JezikId" />
+            <div style="margin-right:10px;" class="input-group col-lg-3 pull-right">
+                <input class="form-control pull-right" placeholder="Pretraži događaj" name="tekst" />
+                <span class="input-group-btn">
+                    <input value="Traži" type="submit" class="btn btn-info" />
+                </span>
+            </div>
+        }
+        <div class="col-lg-3 pull-right">
+            @using (Html.BeginForm("Index", "Dogadjaji"))
+            {
+                @Html.DropDownListFor(model => model.JezikId, Model.JezikStavke, new { @class = "form-control", @onchange = "this.form.submit()" })
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+    <br/>
+    <table  class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Naziv
+                </th>
+                <th>
+                    Opis
+                </th>
+                <th>
+                    Datum događaja
+                </th>
+                <th>
+                    Datum objave
+                </th>
+                <th colspan="2">
+                    Akcija
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DogadjajVM.DogadjajInfo x in Model.dogadjaji)
+            {
+                <tr>
+                    <td>
+                        @x.Naslov
+
+                    </td>
+                    <td>
+                        <div>
+                            @x.Opis
+                        </div>
+                    </td>
+                    <td>
+                        @x.DatumOdrzavanja.ToShortDateString()
+                    </td>
+                    <td>
+                        @x.DatumPostavljanja
+                    </td>
+                    <td width="100">
+                        @Ajax.ActionLink("Uredi", "Uredi", new { dogadjajId = x.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "my-edit-btn pull-left", @title = "Uredi" })
+                        <a href="~/Administrator/Dogadjaji/Obrisi?dogadjajId=@x.Id" onclick="return Submit(this.id)" title="Izbriši">
+                            <img src="~/Template/images/delete-512.png" width="20" height="20" style="margin-left:5px" />
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="result" style="display:none;"></div>
+    @Html.PagedListPager(Model.dogadjaji, page => Url.Action("Index", new { page }))
+
+
+</div>
+
+    <script>
+        var opt = {
+            autoOpen: false,
+            title: 'Mostars Mosques',
+            width: 550,
+            height: 'auto',
+            modal: true
+        };
+
+        function openPopup() {
+            $("#result").dialog(opt).dialog("open");
+        }
+    </script>
+
+

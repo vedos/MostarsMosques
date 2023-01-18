@@ -1,0 +1,91 @@
+﻿@using System.Web.Mvc.Ajax
+@using DiplomskiRadMostarsMosques_Data.Models
+@model List<DiplomskiRadMostarsMosques_Data.Models.Korisnik>
+@{
+    ViewBag.Title = "Upravljanje korisnicima";
+}
+
+<div class="container-fluid">
+
+
+        <div class="col-lg-3 pull-left">
+            <h4 style="margin:0;">Korisnici</h4>
+        </div>
+        @Ajax.ActionLink("Dodaj korisnika", "Dodaj", null, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new { @class = "btn btn-primary pull-right" })
+
+        <br />
+        <br />
+    <br />
+        @if (ViewBag.IsMaster)
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Ime</th>
+                        <th>Prezime</th>
+                        <th>Email</th>
+                        <th>Korisničko ime</th>
+                        <th>Posljednja prijava</th>
+                        <th>Lozinka</th>
+                        <th>Akcija</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Korisnik x in Model)
+                {
+                        <tr>
+                            <td>@x.Ime</td>
+                            <td>@x.Prezime</td>
+                            <td>@x.Email</td>
+                            <td>@x.Username</td>
+                            <td>@x.zadnjaPrijava</td>
+                            <td><input id="td+@x.Id" type="password" readonly="readonly" class="form-control" value="@x.Password" /></td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-info dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                                        Akcija
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                        <li role="presentation">
+                                            @Ajax.ActionLink("Uredi", "Uredi", new { korisnikId = @x.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })
+                                        </li>
+
+                                        <li class="divider"></li>
+                                        <li role="presentation">
+                                            @Html.ActionLink("Izbriši", "Obrisi", new { korisnikId = @x.Id }, new { @onclick = "return Submit(this.id)", id = "obrisi_@x.Id" })
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li role="presentation"><a role="menuitem" onclick="showHide('@x.Id')" href="#">Prikaži lozinku</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+
+            <div id="result" style="display:none;"></div>
+
+        }
+        else {
+            <h3>Nije vam dozvoljena ova operacija</h3>
+        }
+    </div>
+
+    <script>
+    var opt = {
+        autoOpen: false,
+        title: 'Mostars Mosques',
+        width: 350,
+        height: 'auto',
+        modal: true
+    };
+
+    function openPopup() {
+        $("#result").dialog(opt).dialog("open");
+    }
+
+</script>
+

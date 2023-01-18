@@ -1,0 +1,55 @@
+﻿@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.MedzlisEditVM
+@using System.Web.Mvc.Ajax
+@using DiplomskiRadMostarsMosques_Web.Helper
+@using DiplomskiRadMostarsMosques_Data.Models
+@{
+    Jezik jezik = Global.GetJezik(Context);
+    ViewBag.Title = "Uredi";
+    Layout = null;
+}
+<div class="container-fluid card">
+    <br />
+    <h4 class="title">Medžlis</h4>
+    <br />
+    <p class="caption text-primary pull-right">Unosite za: @jezik.Naziv</p>
+    @using (Ajax.BeginForm("Snimi",null, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" }, new{ @id="formId" }))
+
+    {
+        @Html.HiddenFor(model => model.Id)
+        <label>Naziv medžlisa</label><br/>
+        @Html.ValidationMessageFor(model => model.Naziv, "", new { @style = "color:red;" })
+        @Html.TextBoxFor(model => model.Naziv, new { @class = "form-control", placeholder = "Naziv medžlis" })
+        <label>Opis medžlisa</label><br />
+        @Html.ValidationMessageFor(model => model.Opis, "", new { @style = "color:red;" })
+        @Html.TextAreaFor(model => model.Opis, new { @class = "form-control", @placeholder = "Opis medžlis", @rows = "5" })
+        <label>Opština</label><br />
+        @Html.ValidationMessageFor(model => model.opstinaId, "", new { @style = "color:red;" })
+        @Html.DropDownListFor(model => model.opstinaId, Model.opstinaStavke, new { @class = "form-control" })
+        <br />
+        <input type="submit" value="Spremi"  id="input_form" class="btn btn-info pull-right" />
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        var form = $('form#formId');
+        $("#input_form").click(function () {
+            $.ajax({
+                type: "GET",
+                url: '/Medzlisi/CheckValid',
+                data: form.serialize(),
+                success: function (response) {
+                    if (response == "True") {
+                        setTimeout(location.reload.bind(location), 600);
+
+                    } else {
+
+                    }
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+        });
+    });
+</script>

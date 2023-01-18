@@ -1,0 +1,136 @@
+﻿@model DiplomskiRadMostarsMosques_Web.Areas.Administrator.Models.JeziciVM
+@{
+    ViewBag.Title = "";
+
+}
+<div class="container-fluid">
+    <div ng-controller="MapCtrl2">
+        <div class="maps">
+            <!-- Add directive code (gmap directive) for show map and markers-->
+            <ui-gmap-google-map center="map.center" zoom="map.zoom">
+                <ui-gmap-marker ng-repeat="marker in markers" coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+                    <ui-gmap-window options="windowOptions" show="windowOptions.show">
+                        <div style="max-width:200px">
+                            <div class="header"><strong>{{marker.naziv}}</strong></div>
+                            <div id="mapcontent">
+                                @*<p>
+                                        <img ng-src="{{marker.image}}" style="width:200px; height:100px" />
+                                        <div>{{marker.address}}</div>
+                                    </p>*@
+                            </div>
+                        </div>
+                    </ui-gmap-window>
+                </ui-gmap-marker>
+            </ui-gmap-google-map>
+        </div>
+        <br />
+        <a class="btn btn-default pull-right" style="margin-left:2px;margin-right:2px;" href="~/Administrator/Objekat/Dodaj">Dodaj objekat</a>
+        <button ng-click="ShowAllMarkers()" class="btn btn-default pull-right" >Prikaži sve</button>
+        <br />
+        <div class="col-md-3">
+            <input type="text" name="inputSearch" data-ng-model="inputSearch" ng-change="Search(inputSearch)" placeholder="Pretražite lokacije" class="form-control" />
+        </div><div>
+         <select ng-change="onMedzlisSelected()" ng-model="selectedMedzlis" class="form-control"
+               ng-options="item.Id as item.Naziv for item in medzlis">
+             <option value="">Odaberi medžlis</option>
+             </select>
+        </div>
+
+            <br />
+            <table class="locations table table-bordered table-hover table_cursor">
+                <thead>
+                    <tr>
+                        <th>
+                            Naziv
+                        </th>
+                        <th>
+                            Jezici
+                        </th>
+                        <th>
+                            Medžlis
+                        </th>
+                        <th>
+                            Tip objekta
+                        </th>
+                        <th>
+                            Akcija
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="l in locations | filter:q | itemsPerPage: pageSize" current-page="currentPage" total-items="TotalLocationsCount">
+                        <td ng-click="ShowLocation(l.Id)">
+                            {{l.Naziv}}
+                        </td>
+                        <td ng-click="ShowLocation(l.Id)">
+                            <p style="display:inline;" ng-repeat="x in l.jezici">{{x}} </p>
+                        </td>
+                        <td ng-click="ShowLocation(l.Id)">
+                            {{l.miz}}
+                        </td>
+                        <td ng-click="ShowLocation(l.Id)">
+                            {{l.tipObjekta}}
+                        </td>
+                        <td>
+                            <a onclick="openPopupJezici(this)"  >
+
+                                <img src="~/Template/images/edit-icon.png" width="20" height="20" title="Uredi" />
+                                <input type="hidden" value="{{l.Id}}" id="objekatId{{$index}}" />
+                            </a>
+                            <div id="jezici{{l.Id}}" style="display:none;">
+                                <h4>Odaberite jezik</h4>
+                                <form action="Objekat/Uredi">
+                                    <input type="hidden" value="{{l.Id}}" name="objekatId" id="objekatId"/>
+                                    @Html.ValidationMessageFor(model => model.JezikId, "", new { @style = "color:red;" })
+                                    @Html.DropDownListFor(model => model.JezikId, Model.JezikStavke, new { @class = "form-control" })
+                                    <br />
+                                    <input type="submit" class="btn btn-default pull-right" value="Potvrdi" />
+
+                                </form>
+                            </div>
+                               <a href="Objekat/Obrisi?objekatId={{l.Id}}" onclick="return Submit(this.id)">
+                                <img src="~/Template/images/delete-512.png" width="20" height="20" title="Izbriši"/>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+        <div >
+            <div class="text-center">
+                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="~/scripts/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+        </div>
+    <br />
+    </div>
+ <div id="result" style="display:none;"></div>
+
+
+<script>
+    var opt = {
+        autoOpen: false,
+        title: 'Mostars Mosques',
+        width: 350,
+        height: 'auto',
+        modal: true
+    };
+
+    var opt_j = {
+        autoOpen: false,
+        title: 'Odaberite jezik',
+        width: 300,
+        height: 'auto',
+        modal: true
+    };
+
+    function openPopup() {
+        $("#result").dialog(opt).dialog("open");
+    }
+
+    function openPopupJezici(el) {
+        var id = document.getElementById("objekatId"+$(el).closest('tr').index());
+        $("#jezici"+id.value).dialog(opt_j).dialog("open");
+    }
+
+</script>
